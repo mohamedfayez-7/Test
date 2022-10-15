@@ -31,7 +31,7 @@ jobs:
             command: |
               apk add --update ansible
         - run:
-            name: Run Playbook and Configure server
+            name: Configure server
             command: |
               ansible-playbook -i inventory.txt playbook.yml
   # Sequential workflow 
