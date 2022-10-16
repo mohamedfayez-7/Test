@@ -36,7 +36,8 @@ jobs:
         - checkout
         - add_ssh_keys:
                 # You can get this ID in the section where you registered the SSH Key
-                  fingerprints: ["cf:78:4c:aa:3d:97:61:8e:86:e7:e4:8b:09:6b:ed:1f"] 
+                  fingerprints: 
+                    - cf:78:4c:aa:3d:97:61:8e:86:e7:e4:8b:09:6b:ed:1f
         - run:
             name: Install Ansible
             command: |
@@ -46,6 +47,7 @@ jobs:
             command: |
               ANSIBLE_HOST_KEY_CHECKING=False 
               ansible-playbook -i inventory.txt playbook.yml
+
   # Exercise: Smoke Testing
   smoke_test:
       docker:
@@ -125,16 +127,16 @@ workflows:
   myWorkflow:
     jobs:
       #- create_infrastructure
-      #- configure_infrastructure
+      - configure_infrastructure
       #- smoke_test:
       #    requires : 
       #      - create_infrastructure
-      - create_and_deploy_front_end
-      - promote_to_production:
-          requires: 
-            - create_and_deploy_front_end
-      - get_last_deployment_id
-      - clean_up_old_front_end:
-          requires:
-            - get_last_deployment_id
-            - promote_to_production
+      #- create_and_deploy_front_end
+      #- promote_to_production:
+      #    requires: 
+      #      - create_and_deploy_front_end
+      #- get_last_deployment_id
+      #- clean_up_old_front_end:
+      #    requires:
+      #      - get_last_deployment_id
+      #      - promote_to_production
