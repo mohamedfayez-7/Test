@@ -46,7 +46,7 @@ jobs:
         - run:
             name: Configure server
             command: |
-              ssh-agent bash && ssh-add ~/.ssh/udacity.pem && ansible-playbook -i inventory.txt playbook.yml
+              sudo ansible-playbook -i inventory.txt playbook.yml
 
   # Exercise: Smoke Testing
   smoke_test:
