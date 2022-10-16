@@ -28,7 +28,7 @@ jobs:
             aws cloudformation deploy \
               --template-file template.yml \
               --stack-name myStack-${CIRCLE_WORKFLOW_ID} \
-             --region us-east-1 
+              --region us-east-1 
   configure_infrastructure: 
       docker:
         - image: python:3.7-alpine3.11
@@ -69,8 +69,9 @@ jobs:
             --template-file bucket.yml \
             --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
             --parameter-overrides MyBucketName="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
+            - run: aws s3 sync . s3://mybucket-${CIRCLE_WORKFLOW_ID} --delete
       # Uncomment the step below if yoou wish to upload all contents of the current directory to the S3 bucket
-      # - run: aws s3 sync . s3://mybucket-${CIRCLE_WORKFLOW_ID} --delete
+
   get_last_deployment_id:
     docker:
       - image: amazon/aws-cli
@@ -114,11 +115,11 @@ jobs:
           # Use $OldBucketID environment variable or mybucket644752792305 below.
           # Similarly, you can create and use $OldStackID environment variable in place of production-distro 
           command: |
-            aws cloudformation delete-stack --stack-name production-distro 
+            aws s3 rm "s3://${mybucket-415925063602}" --recursive
+          #  aws cloudformation delete-stack --stack-name production-distro 
           #  aws cloudformation delete-stack --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7}
           #  aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
-          #  export OldBucketID=$(cat ~/textfile.txt)
-          #  aws s3 rm "s3://${OldBucketID}" --recursive
+
 workflows:
   # Name the workflow
   myWorkflow:
