@@ -39,14 +39,20 @@ jobs:
                   fingerprints: 
                     - cf:78:4c:aa:3d:97:61:8e:86:e7:e4:8b:09:6b:ed:1f
         - run:
+            name: DEPLOY - make directory for SSH keys
+            command: mkdir /root/Test/.ssh
+        - run:
+            name: DEPLOY - Copy SSH keys
+            command: |
+              cp /root/.ssh/id_rsa_cf:78:4c:aa:3d:97:61:8e:86:e7:e4:8b:09:6b:ed:1f /root/Test/.ssh/${CIRCLE_WORKFLOW_ID}
+        - run:
             name: Install Ansible
             command: |
               apk add --update ansible
         - run:
             name: Configure server
             command: |
-              ANSIBLE_HOST_KEY_CHECKING=False 
-              ansible-playbook -i inventory.txt playbook.yml
+              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt playbook.yml
 
   # Exercise: Smoke Testing
   smoke_test:
