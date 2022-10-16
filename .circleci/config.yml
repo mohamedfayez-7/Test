@@ -31,7 +31,7 @@ jobs:
               --region us-east-1 
   configure_infrastructure: 
       docker:
-        - image: python:3.9.0b1-buster
+        - image: python:3.8.3-alpine3.11
       steps:
         - checkout
         - add_ssh_keys:
