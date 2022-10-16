@@ -46,7 +46,7 @@ jobs:
         - run:
             name: Configure server
             command: |
-              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt playbook.yml
+              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --user=udacity -vvv -i inventory.txt playbook.yml
 
   # Exercise: Smoke Testing
   smoke_test:
