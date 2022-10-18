@@ -31,7 +31,8 @@ jobs:
               --region us-east-1 
   configure_infrastructure: 
       docker:
-        - image: cimg/node:13.8.0
+        - image: python:3.7-alpine3.11
+       # - image: cimg/node:13.8.0
       steps:
         - checkout
         - add_ssh_keys:
@@ -42,15 +43,17 @@ jobs:
         - run:
             name: Install Ansible
             command: |
-              sudo apt update
-              sudo apt upgrade -y
-              sudo apt install python3-pip  -y
-              sudo pip3 install --upgrade pip
-              sudo pip3 install ansible
+              apk add --update ansible
+             # sudo apt update
+             # sudo apt upgrade -y
+             # sudo apt install python3-pip  -y
+             # sudo pip3 install --upgrade pip
+             # sudo pip3 install ansible
         - run:
             name: Configure server
             command: |
-              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt playbook.yml
+              ansible all -m ping -i inventory.txt -u ubuntu
+             # ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt playbook.yml
 
   # Exercise: Smoke Testing
   smoke_test:
