@@ -1,6 +1,6 @@
 ---
 - name: "configuration play"
-  hosts: ubuntu
+  hosts: all
   user: ubuntu
   become: true
   gather_facts: false
@@ -20,4 +20,4 @@
 
     - setup:
   roles:
-    - configure_server
+    - configure_infrastructure
