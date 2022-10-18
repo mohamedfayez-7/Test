@@ -42,7 +42,11 @@ jobs:
         - run:
             name: Install Ansible
             command: |
-              apk add --update ansible
+              apt update
+              apt upgrade -y
+              apt install python3-pip  -y
+              pip3 install --upgrade pip
+              pip3 install ansible
         - run:
             name: Configure server
             command: |
