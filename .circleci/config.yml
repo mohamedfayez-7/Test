@@ -43,6 +43,7 @@ jobs:
         - run:
             name: Install Ansible
             command: |
+              pip install setuptools==5.7
               apk add --update ansible
              # sudo apt update
              # sudo apt upgrade -y
@@ -52,8 +53,7 @@ jobs:
         - run:
             name: Configure server
             command: |
-              ansible all -m ping -i inventory.txt -u ubuntu
-             # ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt playbook.yml
+              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt playbook.yml
 
   # Exercise: Smoke Testing
   smoke_test:
